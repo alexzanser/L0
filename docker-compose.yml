@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  postgres: 
+    container_name:
+      db
+    image: postgres:14
+    environment:
+      - POSTGRES_DB="orders"
+      - POSTGRES_USER:"user_go"
+      - POSTGRES_PASSWORD:"8956_go"
+    ports:
+      - "5422:5432"
+    volumes:
+      - mydata:/home/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  mydata:
+    
