@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS orders (
     order_uid varchar PRIMARY KEY,
-    track_number varchar,
+    track_number varchar UNIQUE,
     entry varchar
 );
 
