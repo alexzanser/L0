@@ -6,9 +6,9 @@ type Order struct {
 	OrderUid			string		`json:"order_uid"`
 	TrackNumber			string		`json:"track_number"`
 	Entry				string		`json:"entry"`
-	Delivery			Delivery	`json:"delivery"`
-	Payment				Payment		`json:"payment"`
-	Items				[]Item		`json:"items"`
+	Delivery			*Delivery	`json:"delivery"`
+	Payment				*Payment	`json:"payment"`
+	Items				*[]Item		`json:"items"`
 	Locale				string		`json:"locale"`
 	InternalSignature	string		`json:"internal_signature"`
 	CustomerId			string		`json:"customer_id"`
@@ -39,7 +39,7 @@ type Payment struct {
 	Bank			string	`json:"bank"`
 	DeliveryCost	int		`json:"delivery_cost"`
 	GoodsTotal		int		`json:"goods_total"`
-	CustomFee		int		`json:"goods_total"`
+	CustomFee		int		`json:"custom_fee""`
 }
 
 type Item struct {

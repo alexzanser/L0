@@ -29,6 +29,15 @@ func (s *Store) GetOrder(orderID string) (domain.Order, error) {
 	}
 }
 
-func (s *Store) AddOrder() {
-	
+func (s *Store) AddOrder(order *domain.Order) error {
+	s.Lock()
+	defer s.Unlock()
+
+	_, ok := s.Orders[order.OrderUid]
+	if ok {
+		return fmt.Errorf("Order already exists/Invalid OrderUid <%s>", order.OrderUid)
+	} else {
+		s.Orders[order.OrderUid] = *order
+		return nil
+	}
 }
