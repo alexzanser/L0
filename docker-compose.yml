@@ -4,7 +4,8 @@ services:
   postgres: 
     container_name:
       db
-    image: postgres:14
+    image: 
+      postgres:14
     environment:
       - POSTGRES_DB=orders
       - POSTGRES_USER=user_go

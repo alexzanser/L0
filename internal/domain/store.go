@@ -1,8 +1,8 @@
 package domain
 
 type Order struct {
-	Order_uid		string		`json:"order_uid"`
-	Track_number	string		`json:"track_number"`
+	OrderUid		string		`json:"order_uid"`
+	TrackNumber		string		`json:"track_number"`
 	Entry			string		`json:"entry"`
 	Delivery		Delivery	`json:"delivery"`
 	Items			[]Item		`json:"items"`	
@@ -19,6 +19,10 @@ type Delivery struct {
 }
 
 type Item struct {
-	Chrt_id	int 
+	ChrtId			int 	`json:"chrt_id"`
+	TrackNumber		string	`json:"track_number"`
+	Price			int		`json:"price"`
+	Rid				string	`json:"rid"`
+
 }
 
