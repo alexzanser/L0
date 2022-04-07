@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 
 CREATE TABLE IF NOT EXISTS delivery (
-    order_uid   REFERENCES orders,
+    order_uid   varchar REFERENCES orders,
     name        varchar,
     phone       varchar,
     zip         varchar,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS delivery (
 );
 
 CREATE TABLE IF NOT EXISTS payment (
-    order_uid       REFERENCES orders,
+    order_uid       varchar REFERENCES orders,
     transaction     varchar,
     request_id      varchar,
     currency        varchar,
@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS payment (
 );
 
 CREATE TABLE IF NOT EXISTS items (
-    order_uid       REFERENCES orders,
+    order_uid       varchar REFERENCES orders,
     chrt_id         integer NOT NULL,
-    track_number    REFERENCES orders(track_number),
+    track_number    varchar REFERENCES orders(track_number),
     price           integer CHECK(VALUE > 0),
     rid             varchar,
     name            varchar,
