@@ -1,7 +1,15 @@
 CREATE TABLE IF NOT EXISTS orders (
-    order_uid varchar PRIMARY KEY,
-    track_number varchar UNIQUE,
-    entry varchar
+    order_uid           varchar PRIMARY KEY,
+    track_number        varchar UNIQUE,
+    entry               varchar,
+    locale              varchar,
+    internal_signature  varchar,
+    customer_id         varchar,
+    delivery_service    varchar,
+    shardkey            varchar,
+    sm_id               integer,
+    date_created        timestamptz,
+    oof_shard           varchar,
 );
 
 CREATE TABLE IF NOT EXISTS delivery (
