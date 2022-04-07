@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS orders (
     shardkey            varchar,
     sm_id               integer,
     date_created        timestamptz,
-    oof_shard           varchar,
+    oof_shard           varchar
 );
 
 CREATE TABLE IF NOT EXISTS delivery (
