@@ -1,10 +1,12 @@
 package store
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type Order struct {
 	ID	string `json:"order_uid"`
-	Info interface{}
+	Info []byte
 }
 
 type Storage struct {

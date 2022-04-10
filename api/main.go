@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/alexzanser/L0.git/internal/store"
 	sub "github.com/alexzanser/L0.git/internal/subscribe"
@@ -23,18 +24,19 @@ func main() {
 	defer sc.Close()
 
 	storage := store.New()
-	go func () {
-		sub, err := sub.Subscribe(sc, *storage)
-		if err != nil {
-			log.Println(fmt.Errorf("Error during subscription %w", err))
-		}
-		defer sub.Unsubscribe()
-	}()
-	
-	for {
-		for order := range storage.Orders {
-			fmt.Println(order)
-		}
+	sub, err := sub.Subscribe(sc, storage)
+	if err != nil {
+		log.Println(fmt.Errorf("Error during subscription %w", err))
 	}
+	defer sub.Unsubscribe()
+	
+	go func () {
+		for {
+			for _, order := range storage.Orders {
+				fmt.Printf("%s\n", order.Info)
+			}
+			time.Sleep(time.Second * 5)
+		}
+	}()
 	<- quit
 }

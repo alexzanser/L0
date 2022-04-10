@@ -21,6 +21,6 @@ func main() {
 	defer sc.Close()
 	for {
 		sc.Publish("foo", data)
-		time.Sleep(time.Second * 10)
+		time.Sleep(time.Second * 5)
 	}
 }

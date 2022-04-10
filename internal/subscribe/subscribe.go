@@ -17,7 +17,7 @@ func Connect(clusterID, clientID string) (stan.Conn, error) {
 	return sc, nil 
 }
 
-func Subscribe(sc stan.Conn, store store.Storage) (stan.Subscription, error) {
+func Subscribe(sc stan.Conn, store *store.Storage) (stan.Subscription, error) {
 	ReceiveMsg := func(m *stan.Msg) {
 		store.Save(m.Data)
 		m.Ack()
