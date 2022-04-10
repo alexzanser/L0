@@ -18,6 +18,7 @@ func New() *Storage {
 	}
 }
 
+
 func (s *Storage) Save(data []byte) error {
 	order := &order.Order{}
 	err := json.Unmarshal(data, order)

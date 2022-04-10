@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/alexzanser/L0.git/internal/store"
-	// sub "github.com/alexzanser/L0.git/internal/subscribe"
+	sub "github.com/alexzanser/L0.git/internal/subscribe"
 	"github.com/alexzanser/L0.git/pkg/postgres"
 )
 
@@ -25,18 +25,18 @@ func main() {
 	}
 	fmt.Println("Connected sucesfully!")
 	storage := store.New()
+	
 
-
-	// sc, err := sub.Connect(clusterID, clientID)
-	// if err != nil {
-	// 	log.Fatal(fmt.Errorf("Error during connection %w", err))
-	// }
-	// defer sc.Close()
-	// sub, err := sub.Subscribe(sc, storage)
-	// if err != nil {
-	// 	log.Fatal(fmt.Errorf("Error during subscription %w", err))
-	// }
-	// defer sub.Unsubscribe()
+	sc, err := sub.Connect(clusterID, clientID)
+	if err != nil {
+		log.Fatal(fmt.Errorf("Error during connection %w", err))
+	}
+	defer sc.Close()
+	sub, err := sub.Subscribe(sc, storage)
+	if err != nil {
+		log.Fatal(fmt.Errorf("Error during subscription %w", err))
+	}
+	defer sub.Unsubscribe()
 	
 	go func () {
 		for {
