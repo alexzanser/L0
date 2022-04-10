@@ -26,16 +26,16 @@ func main() {
 	storage := store.New()
 
 
-	sc, err := sub.Connect(clusterID, clientID)
-	if err != nil {
-		log.Fatal(fmt.Errorf("Error during connection %w", err))
-	}
-	defer sc.Close()
-	sub, err := sub.Subscribe(sc, storage)
-	if err != nil {
-		log.Fatal(fmt.Errorf("Error during subscription %w", err))
-	}
-	defer sub.Unsubscribe()
+	// sc, err := sub.Connect(clusterID, clientID)
+	// if err != nil {
+	// 	log.Fatal(fmt.Errorf("Error during connection %w", err))
+	// }
+	// defer sc.Close()
+	// sub, err := sub.Subscribe(sc, storage)
+	// if err != nil {
+	// 	log.Fatal(fmt.Errorf("Error during subscription %w", err))
+	// }
+	// defer sub.Unsubscribe()
 	
 	go func () {
 		for {
