@@ -2,7 +2,9 @@ package subscribe
 
 import (
 	"fmt"
+	"log"
 	"time"
+
 	"github.com/alexzanser/L0.git/internal/store"
 	stan "github.com/nats-io/stan.go"
 )
@@ -19,10 +21,12 @@ func Connect(clusterID, clientID string) (stan.Conn, error) {
 
 func Subscribe(sc stan.Conn, store *store.Storage) (stan.Subscription, error) {
 	ReceiveMsg := func(m *stan.Msg) {
-		store.Save(m.Data)
+		if err := store.Save(m.Data); err != nil {
+			log.Println(err)
+		}
 		m.Ack()
 	}
-
+	
 	aw, _ := time.ParseDuration("60s")
 	sub, err := sc.Subscribe("foo", 
 				ReceiveMsg, 
