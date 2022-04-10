@@ -13,7 +13,7 @@ import (
 const (
 	clusterID = "test-cluster"
 	clientID = "client-222"
-	connstr = "postgres://user_go:8956_go@db:5422/orders"
+	connstr = "postgres://user_go:8956_go@localhost:5422/orders"
 )
 
 func main() {
