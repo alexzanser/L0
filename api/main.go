@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/alexzanser/L0.git/internal/store"
-	sub "github.com/alexzanser/L0.git/internal/subscribe"
+	// sub "github.com/alexzanser/L0.git/internal/subscribe"
 	"github.com/alexzanser/L0.git/pkg/postgres"
 )
 
