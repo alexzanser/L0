@@ -14,7 +14,7 @@ func NewStorage() Storage {
 	}
 }
 
-func (s *Storage) Save(orderID string, data []byte) error {
+func (s *Storage) Store(orderID string, data []byte) error {
 	if _, ok := s.Orders[orderID]; ok {
 		return fmt.Errorf("Order already exists")
 	}

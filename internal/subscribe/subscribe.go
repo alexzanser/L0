@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"time"
-	repo "github.com/alexzanser/L0.git/internal/repository"
+	"github.com/alexzanser/L0.git/internal/repository"
 	"github.com/alexzanser/L0.git/internal/domain"
 	stan "github.com/nats-io/stan.go"
 )
@@ -20,13 +20,13 @@ func Connect(clusterID, clientID string) (stan.Conn, error) {
 	return sc, nil 
 }
 
-func Subscribe(sc stan.Conn, store *repo.Storage) (stan.Subscription, error) {
+func Subscribe(sc stan.Conn, repo *repository.Repository) (stan.Subscription, error) {
 	ReceiveMsg := func(m *stan.Msg) {
-		order := &domain.Order{}
+		order := &order.Order{}
 		err := json.Unmarshal(m.Data, order)
 		if err != nil {
 			log.Println(fmt.Errorf("Cant`t unmarshal to json (invalid data)%v", err))
-		} else if err := store.Save(order.OrderUid, m.Data); err != nil {
+		} else if err := repo.Save(order.OrderUid, m.Data); err != nil {
 			log.Println(err)
 		}
 		m.Ack()
