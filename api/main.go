@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/alexzanser/L0.git/internal/store"
+	repo "github.com/alexzanser/L0.git/internal/repository"
 	sub "github.com/alexzanser/L0.git/internal/subscribe"
 	"github.com/alexzanser/L0.git/pkg/postgres"
 )
@@ -19,20 +19,19 @@ const (
 func main() {
 	quit := make(chan struct {})
 
-	_, err := postgres.NewPool(connstr)
+	pool, err := postgres.NewPool(connstr)
 	if err != nil {
 		log.Fatal(fmt.Errorf("Can`t create new pool %v", err))
 	}
-	fmt.Println("Connected sucesfully!")
-	storage := store.New()
-	
+	repo := repo.NewRepository(pool)
+
 
 	sc, err := sub.Connect(clusterID, clientID)
 	if err != nil {
 		log.Fatal(fmt.Errorf("Error during connection %w", err))
 	}
 	defer sc.Close()
-	sub, err := sub.Subscribe(sc, storage)
+	sub, err := sub.Subscribe(sc, &repo.Storage)
 	if err != nil {
 		log.Fatal(fmt.Errorf("Error during subscription %w", err))
 	}
@@ -40,8 +39,8 @@ func main() {
 	
 	go func () {
 		for {
-			for _, order := range storage.Orders {
-				fmt.Printf("AAAAAA %s orders: %d\n", string(order), len(storage.Orders))
+			for _, order := range repo.Orders {
+				fmt.Printf("AAAAAA %s orders: %d\n", string(order), len(repo.Orders))
 			}
 			time.Sleep(time.Second * 5)
 		}

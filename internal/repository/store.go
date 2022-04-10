@@ -1,23 +1,20 @@
-package store
+package repository
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/alexzanser/L0.git/internal/domain"
 )
 
 type Storage struct {
-	pool   *pgxpool.Pool
 	Orders map[string][]byte
 }
 
-func New() *Storage {
-	return &Storage{
+func NewStorage() Storage {
+	return Storage{
 		Orders : make(map[string][]byte, 0),
 	}
 }
-
 
 func (s *Storage) Save(data []byte) error {
 	order := &order.Order{}
@@ -39,8 +36,4 @@ func (s *Storage) GetOrder(orderID string) []byte {
 		return val
 	}
 	return nil
-}
-
-type Saver interface {
-	Save(data []byte)
 }

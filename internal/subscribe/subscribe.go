@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/alexzanser/L0.git/internal/store"
+	"github.com/alexzanser/L0.git/internal/repository"
 	stan "github.com/nats-io/stan.go"
 )
 
@@ -19,7 +19,7 @@ func Connect(clusterID, clientID string) (stan.Conn, error) {
 	return sc, nil 
 }
 
-func Subscribe(sc stan.Conn, store *store.Storage) (stan.Subscription, error) {
+func Subscribe(sc stan.Conn, store *repository.Storage) (stan.Subscription, error) {
 	ReceiveMsg := func(m *stan.Msg) {
 		if err := store.Save(m.Data); err != nil {
 			log.Println(err)
