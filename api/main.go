@@ -23,6 +23,7 @@ func main() {
 	if err != nil {
 		log.Fatal(fmt.Errorf("Can`t create new pool %v", err))
 	}
+	fmt.Println("Connected sucesfully!")
 	storage := store.New()
 
 
