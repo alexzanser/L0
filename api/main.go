@@ -2,36 +2,39 @@ package main
 
 import (
 	"fmt"
-	"time"
-	stan "github.com/nats-io/stan.go"
+	"log"
+
+	"github.com/alexzanser/L0.git/internal/store"
+	sub "github.com/alexzanser/L0.git/internal/subscribe"
 )
 
 const (
 	clusterID = "test-cluster"
 	clientID = "client-222"
-	durableName = "waiting-for-the-end"
 )
 
-func receiveMsg(m *stan.Msg) {
-	m.Ack()
-	fmt.Printf("Received a message: %s\n", string(m.Data))
-}
-
 func main() {
-	quit := make(chan struct{})
-	sc, err := stan.Connect(clusterID, clientID)
+	quit := make(chan struct {})
+
+	sc, err := sub.Connect(clusterID, clientID)
 	if err != nil {
-		fmt.Errorf("Error connecting to STAN: %v", err)
-		return
-	} 
+		log.Println(fmt.Errorf("Error during connection %w", err))
+	}
 	defer sc.Close()
 
-	aw, _ := time.ParseDuration("60s")
-	sub, err := sc.Subscribe("foo", receiveMsg, stan.SetManualAckMode(), stan.AckWait(aw), stan.DurableName(durableName))
-	if err != nil {
-		fmt.Errorf("Error subcribing to channel: %v", err)
-		return
+	storage := store.New()
+	go func () {
+		sub, err := sub.Subscribe(sc, *storage)
+		if err != nil {
+			log.Println(fmt.Errorf("Error during subscription %w", err))
+		}
+		defer sub.Unsubscribe()
+	}()
+	
+	for {
+		for order := range storage.Orders {
+			fmt.Println(order)
+		}
 	}
-	defer sub.Unsubscribe()
-	<-quit
+	<- quit
 }
