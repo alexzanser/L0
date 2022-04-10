@@ -1,10 +1,12 @@
 package subscribe
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"time"
 
+	"github.com/alexzanser/L0.git/internal/domain"
 	"github.com/alexzanser/L0.git/internal/repository"
 	stan "github.com/nats-io/stan.go"
 )
@@ -21,7 +23,11 @@ func Connect(clusterID, clientID string) (stan.Conn, error) {
 
 func Subscribe(sc stan.Conn, store *repository.Storage) (stan.Subscription, error) {
 	ReceiveMsg := func(m *stan.Msg) {
-		if err := store.Save(m.Data); err != nil {
+		order := &order.Order{}
+		err := json.Unmarshal(m.Data, order)
+		if err != nil {
+			log.Println(fmt.Errorf("Cant`t unmarshal to json (invalid data)%v", err))
+		} else if err := store.Save(order.OrderUid, m.Data); err != nil {
 			log.Println(err)
 		}
 		m.Ack()

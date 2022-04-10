@@ -1,9 +1,7 @@
 package repository
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/alexzanser/L0.git/internal/domain"
 )
 
 type Storage struct {
@@ -16,18 +14,11 @@ func NewStorage() Storage {
 	}
 }
 
-func (s *Storage) Save(data []byte) error {
-	order := &order.Order{}
-	err := json.Unmarshal(data, order)
-	if err != nil {
-		return fmt.Errorf("Cant`t unmarshal to json (invalid data)%v", err)
+func (s *Storage) Save(orderID string, data []byte) error {
+	if _, ok := s.Orders[orderID]; ok {
+		return fmt.Errorf("Order already exists")
 	}
-
-	if _, ok := s.Orders[order.OrderUid]; ok {
-		return fmt.Errorf("Order already exists %v", err)
-	}
-
-	s.Orders[order.OrderUid] = data
+	s.Orders[orderID] = data
 	return nil
 }
 
