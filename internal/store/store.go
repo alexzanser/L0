@@ -3,11 +3,12 @@ package store
 import (
 	"encoding/json"
 	"fmt"
-
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/alexzanser/L0.git/internal/domain"
 )
 
 type Storage struct {
+	pool   *pgxpool.Pool
 	Orders map[string][]byte
 }
 
