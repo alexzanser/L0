@@ -5,7 +5,7 @@ import (
 	"github.com/go-chi/chi"
 	"net/http"
 	"log"
-	"encoding/json"
+	// "encoding/json"
 )
 type Orders struct {
 	repo repository.Repository
@@ -38,11 +38,11 @@ const text = `<!DOCTYPE html>
 func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
 	log.Printf("handling get task at %s\n", r.URL.Path)
 
-	id := chi.URLParam(r, "id")
-	order, err := o.repo.GetOrder(id)
-		if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
-	}
+	// id := chi.URLParam(r, "id")
+	// order, err := o.repo.GetOrder(id)
+	// 	if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusNotFound)
+	// }
 
 	// js, err := json.Marshal(order)
 	// if err != nil {
