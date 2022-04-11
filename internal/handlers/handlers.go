@@ -36,6 +36,9 @@ const text = `<!DOCTYPE html>
 		<button class="pressed-button">
 		 I am gay
 		</button>
+		<form>
+		 Like anal sex?
+		</form>
     </body>
 </html>`
 
