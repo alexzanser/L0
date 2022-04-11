@@ -42,7 +42,7 @@ func main() {
 
 	r := chi.NewRouter()
 	ordersHandler := handlers.NewOrders(*repo)
-	r.Mount("/orders", ordersHandler.Routes())
+	r.Mount("/", ordersHandler.Routes())
 
 	http.ListenAndServe("localhost:8080", r)
 	// go func () {
