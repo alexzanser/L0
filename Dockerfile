@@ -5,7 +5,7 @@ WORKDIR /build
 ADD . /build
 
 RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0  GO111MODULE=on\
-    go build -o server cmd/api/main.go
+    go build -o server api/main.go
 
 FROM scratch
 
