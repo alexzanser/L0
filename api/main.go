@@ -5,7 +5,10 @@ import (
 	"log"
 	repo "github.com/alexzanser/L0.git/internal/repository"
 	sub "github.com/alexzanser/L0.git/internal/subscribe"
+	"net/http"
 	"github.com/alexzanser/L0.git/pkg/postgres"
+	"github.com/go-chi/chi"
+	"github.com/alexzanser/L0.git/internal/handlers"
 )
 
 const (
@@ -26,17 +29,22 @@ func main() {
 	if err != nil {
 		log.Fatal(fmt.Errorf("Can`t restore data from cache %v", err))
 	}
-	sc, err := sub.Connect(clusterID, clientID)
-	if err != nil {
-		log.Fatal(fmt.Errorf("Error during connection %w", err))
-	}
-	defer sc.Close()
-	sub, err := sub.Subscribe(sc, repo)
-	if err != nil {
-		log.Fatal(fmt.Errorf("Error during subscription %w", err))
-	}
-	defer sub.Unsubscribe()
-	
+	// sc, err := sub.Connect(clusterID, clientID)
+	// if err != nil {
+	// 	log.Fatal(fmt.Errorf("Error during connection %w", err))
+	// }
+	// defer sc.Close()
+	// sub, err := sub.Subscribe(sc, repo)
+	// if err != nil {
+	// 	log.Fatal(fmt.Errorf("Error during subscription %w", err))
+	// }
+	// defer sub.Unsubscribe()
+
+	r := chi.NewRouter()
+	ordersHandler := handlers.NewOrders(*repo)
+	r.Mount("/orders", ordersHandler.Routes())
+
+	http.ListenAndServe(":80", r)
 	// go func () {
 	// 	for {
 	// 		for _, order := range repo.Orders {

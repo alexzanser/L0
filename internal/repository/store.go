@@ -22,9 +22,9 @@ func (s *Storage) Store(orderID string, data []byte) error {
 	return nil
 }
 
-func (s *Storage) GetOrder(orderID string) []byte {
+func (s *Storage) GetOrder(orderID string) ([]byte, error) {
 	if val, ok := s.Orders[orderID]; ok {
-		return val
+		return val, nil
 	}
-	return nil
+	return nil, fmt.Errorf("Order with id %s not found", orderID)
 }

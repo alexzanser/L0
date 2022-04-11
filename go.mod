@@ -3,6 +3,7 @@ module github.com/alexzanser/L0.git
 go 1.18
 
 require (
+	github.com/go-chi/chi v1.5.4
 	github.com/jackc/pgx/v4 v4.15.0
 	github.com/nats-io/stan.go v0.10.2
 )
