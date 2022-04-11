@@ -44,7 +44,7 @@ func main() {
 	ordersHandler := handlers.NewOrders(*repo)
 	r.Mount("/", ordersHandler.Routes())
 
-	http.ListenAndServe("132.226.200.167:8080", r)
+	http.ListenAndServe(":8080", r)
 	// go func () {
 	// 	for {
 	// 		for _, order := range repo.Orders {
