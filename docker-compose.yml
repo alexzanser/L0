@@ -18,7 +18,7 @@ services:
     image: 
       postgres:14
     environment:
-      - POSTGRES_DB=orders
+      - POSTGRES_DB=orders 
       - POSTGRES_USER=user_go
       - POSTGRES_PASSWORD=8956_go
     ports:
