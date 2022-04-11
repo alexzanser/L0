@@ -19,7 +19,7 @@ func (o *Orders) Routes() chi.Router {
 	r := chi.NewRouter()
 
 	r.Route("/", func(r chi.Router) {
-		r.Get("/{id}", o.getOrder)
+		r.Get("/orders/{id}", o.getOrder)
 	})
 
 	return r
