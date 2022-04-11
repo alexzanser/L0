@@ -39,7 +39,7 @@ func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	w.Write([]byte("Zalupa!!!!"))
+	
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)
 }
