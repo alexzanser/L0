@@ -29,6 +29,7 @@ const text = `<!DOCTYPE html>
 <html>
     <head>
         <title>Example</title>
+		<link rel="stylesheet" type="text/css" href="gay.css">
     </head>
     <body>
         <p>This is an example of a simple HTML page with one paragraph.</p>
