@@ -3,8 +3,8 @@ version: "3.3"
 services:
   orders:
     depends_on:
-      - postgres
-    build: .
+      - db
+    build: .  
     container_name: orders
     networks:
       - backend
