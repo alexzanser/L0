@@ -32,6 +32,9 @@ const text = `<!DOCTYPE html>
     </head>
     <body>
         <p>This is an example of a simple HTML page with one paragraph.</p>
+		<button>
+		 I am gay
+		</button>
     </body>
 </html>`
 
