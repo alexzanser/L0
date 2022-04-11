@@ -26,7 +26,7 @@ func (o *Orders) Routes() chi.Router {
 }
 
 func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
-	log.Print("handling get task at %s\n", r.URL.Path)
+	log.Printf("handling get task at %s\n", r.URL.Path)
 
 	id := chi.URLParam(r, "id")
 
