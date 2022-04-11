@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	repo "github.com/alexzanser/L0.git/internal/repository"
-	sub "github.com/alexzanser/L0.git/internal/subscribe"
+	// sub "github.com/alexzanser/L0.git/internal/subscribe"
 	"net/http"
 	"github.com/alexzanser/L0.git/pkg/postgres"
 	"github.com/go-chi/chi"
