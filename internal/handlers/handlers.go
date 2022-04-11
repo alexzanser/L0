@@ -25,6 +25,16 @@ func (o *Orders) Routes() chi.Router {
 	return r
 }
 
+const text = `<!DOCTYPE html>
+<html>
+    <head>
+        <title>Example</title>
+    </head>
+    <body>
+        <p>This is an example of a simple HTML page with one paragraph.</p>
+    </body>
+</html>`
+
 func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
 	log.Printf("handling get task at %s\n", r.URL.Path)
 
@@ -41,5 +51,6 @@ func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "html")
-	w.Write(js)
+	// w.Write(js)
+	w.Write([]byte(text))
 }
