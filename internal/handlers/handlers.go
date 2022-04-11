@@ -36,9 +36,6 @@ const text = `<!DOCTYPE html>
 		<button onclick="">
 		 I am gay
 		</button>
-		<script src="gay.js">
-			gay.js
-		</script>
     </body>
 </html>`
 
