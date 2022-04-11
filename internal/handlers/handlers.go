@@ -39,7 +39,7 @@ func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
 	log.Printf("handling get task at %s\n", r.URL.Path)
 
 	id := chi.URLParam(r, "id")
-
+	w.Write([]byte(text))
 	order, err := o.repo.GetOrder(id)
 		if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
@@ -52,5 +52,5 @@ func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
 
 	w.Header().Set("Content-Type", "html")
 	// w.Write(js)
-	w.Write([]byte(text))
+
 }
