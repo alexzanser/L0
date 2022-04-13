@@ -1,10 +1,11 @@
 package handlers
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/alexzanser/L0.git/internal/repository"
 	"github.com/go-chi/chi"
-	"net/http"
-	"log"
 	// "encoding/json"
 )
 type Orders struct {
@@ -19,7 +20,8 @@ func (o *Orders) Routes() chi.Router {
 	r := chi.NewRouter()
 
 	r.Route("/", func(r chi.Router) {
-		r.Get("/orders/{id}", o.getOrder)
+		r.Get("/orders/", o.Order)
+		r.Post("/orders/", o.getOrder)		
 	})
 
 	return r
@@ -28,36 +30,34 @@ func (o *Orders) Routes() chi.Router {
 const text = `<!DOCTYPE html>
 <html>
     <head>
-        <title>Example</title>
+        <title>Orders</title>
 		<link rel="stylesheet" type="text/css" href="gay.css">
     </head>
     <body>
-        <p>This is an example of a simple HTML page with one paragraph.</p>
-		<button class="pressed-button">
-		 I am gay
-		</button>
-		<form>
-		 Like anal sex?
+        <p>Please enter the order ID.</p>
+		<form action="http://localhost:8080/orders/" method="POST">
+    		<input type="text" name="id">
 		</form>
     </body>
 </html>`
 
-func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
+func (o *Orders) Order(w http.ResponseWriter, r*http.Request) {
 	log.Printf("handling get task at %s\n", r.URL.Path)
+	w.Header().Set("Content-Type", "html")
+	w.Write([]byte(text))
+}
 
-	// id := chi.URLParam(r, "id")
-	// order, err := o.repo.GetOrder(id)
-	// 	if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusNotFound)
-	// }
+func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
+	log.Printf("handling post task at %s\n", r.URL.Path)
 
+	id := r.PostFormValue("id")
+	order, err := o.repo.GetOrder(id)
+		if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
 	// js, err := json.Marshal(order)
 	// if err != nil {
 	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
 	// }
-
-	w.Header().Set("Content-Type", "html")
-	w.Write([]byte(text))
-	// w.Write(js)
-
+	w.Write(order)
 }
