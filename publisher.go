@@ -14,7 +14,7 @@ const (
 )
 
 func main() {
-	f, _ := os.Open("./model.json")
+	f, _ := os.Open("task/model.json")
 	data, _ := io.ReadAll(f)
 
 	sc, _ := stan.Connect(clusterID, clientID)

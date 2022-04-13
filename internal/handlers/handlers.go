@@ -27,24 +27,39 @@ func (o *Orders) Routes() chi.Router {
 	return r
 }
 
-const text = `<!DOCTYPE html>
+const getOrderHTML= `<!DOCTYPE html>
 <html>
     <head>
         <title>Orders</title>
-		<link rel="stylesheet" type="text/css" href="gay.css">
+		<link rel="stylesheet" type="text/css" href="font/styles.css">
     </head>
     <body>
-        <p>Please enter the order ID.</p>
-		<form action="http://localhost:8080/orders/" method="POST">
-    		<input type="text" name="id">
+        <h1>Please enter the order ID.</h1>
+		<form action="http://localhost:8080/orders/" method="POST" id="myForm">
+			<input type="text" name="id">
+    		<button type="submit" class="btn" name="something"><i class="btn"></i>Submit</button>
 		</form>
     </body>
 </html>`
 
+const getBackHTML =`<!DOCTYPE html>
+<html>
+    <head>
+        <title>Orders</title>
+    </head>
+    <body>
+		<a href="http://www.google.com/">
+			<input type="button" value="Visit Google">
+		</a>
+    </body>
+</html>`
+
+
 func (o *Orders) Order(w http.ResponseWriter, r*http.Request) {
 	log.Printf("handling get task at %s\n", r.URL.Path)
-	w.Header().Set("Content-Type", "html")
-	w.Write([]byte(text))
+
+	w.Header().Set("Content-Type", "html;charset=utf-8")
+	w.Write([]byte(getOrderHTML))
 }
 
 func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
@@ -55,9 +70,8 @@ func (o *Orders) getOrder(w http.ResponseWriter, r*http.Request) {
 		if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 	}
-	// js, err := json.Marshal(order)
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-	// }
+
+	w.Header().Set("Content-Type", "html;charset=utf-8")
+	w.Write([]byte(getBackHTML))
 	w.Write(order)
 }

@@ -18,8 +18,6 @@ const (
 )
 
 func main() {
-	quit := make(chan struct {})
-
 	pool, err := postgres.NewPool(connstr)
 	if err != nil {
 		log.Fatal(fmt.Errorf("Can`t create new pool %v", err))
@@ -45,13 +43,4 @@ func main() {
 	r.Mount("/", ordersHandler.Routes())
 
 	http.ListenAndServe(":8080", r)
-	// go func () {
-	// 	for {
-	// 		for _, order := range repo.Orders {
-	// 			fmt.Printf("AAAAAA %s orders: %d\n", string(order), len(repo.Orders))
-	// 		}
-	// 		time.Sleep(time.Second * 5)
-	// 	}
-	// }()
-	<- quit
 }
