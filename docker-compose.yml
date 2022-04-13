@@ -1,14 +1,29 @@
 version: "3.3"
 
 services:
+  nats:
+    image: 
+      nats-streaming:latest
+    container_name:
+      nats
+    hostname:
+      nats
+    ports:
+      - "4222:4222"    
+    networks:
+      - backend
+  
   orders:
     depends_on:
+      - nats
       - postgres
     build: .  
     container_name: orders
     networks:
       - backend
     hostname: orders
+    environment:
+      - "NATS_URL=nats://nats:4222"
     ports:
       - "8080:8080"
 

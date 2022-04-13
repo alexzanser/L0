@@ -4,16 +4,18 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"time"
-	"github.com/alexzanser/L0.git/internal/repository"
+
 	"github.com/alexzanser/L0.git/internal/domain"
+	"github.com/alexzanser/L0.git/internal/repository"
 	stan "github.com/nats-io/stan.go"
 )
 
 const 	durableName = "waiting-for-the-end"
 
 func Connect(clusterID, clientID string) (stan.Conn, error) {
-	sc, err := stan.Connect(clusterID, clientID)
+	sc, err := stan.Connect(clusterID, clientID,stan.NatsURL(os.Getenv("NATS_URL")))
 	if err != nil {
 		return nil, fmt.Errorf("Error while Connect to STAN: %v", err)
 	}
